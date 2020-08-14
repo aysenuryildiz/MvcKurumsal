@@ -24,5 +24,22 @@ namespace Project.Test
             int result = service.InsertCommand(personel);
             Debug.WriteLine(result);
         }
+        [TestMethod]
+        public void GetData()
+        {
+            var result = service.GetData();
+            Debug.WriteLine(result.Name);
+        }
+        
+        [TestMethod]
+        public void GetDataList()
+        {
+            var list = service.GetDataList();
+            foreach (var item in list)
+            {
+                Debug.Write(item.Name);
+
+            }
+        }
     }
 }
