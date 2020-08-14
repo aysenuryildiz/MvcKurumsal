@@ -14,6 +14,9 @@ namespace Project.Http
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+
+            config.Formatters.Remove(config.Formatters.XmlFormatter);//default olarak api, xml döndürdüğü için önce xml kaldır
+            config.Formatters.Add(config.Formatters.JsonFormatter);
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

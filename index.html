@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="jquery-3.2.1.min.js"></script>
+
+    <script>
+      $(function () {
+        $("#btnSubmit").click(function () {
+          $.ajax({
+            url: "http://localhost:50887/http/GetPersonelDataList",
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            success: function (result) {
+                alert(JSON.stringify(result));
+            },
+            error: function (xhr, status, error) {
+              alert(status + " - " + error);
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <button id="btnSubmit">Get Personel List</button>
+  </body>
+</html>
