@@ -10,6 +10,11 @@ namespace Project.Domain
             return ExecuteCommandText(query, personel);
         }
 
+        public int InsertCommandScalar(Personel personel)
+        {
+            string query = "INSERT INTO Personel VALUES (@Name,@LastName) SELECT CAST (scope_identity() as int)";
+            return ExecuteCommandScalar(query, personel);
+        }
 
         public Personel GetData()
         {

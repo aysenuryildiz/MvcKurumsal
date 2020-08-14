@@ -54,5 +54,19 @@ namespace Project.Test
             var result = service.FastInsert(personel);
             Debug.WriteLine(result);
         }
+
+
+        [TestMethod]
+        public void InsertScalar()
+        {
+
+            Domain.Personel personel = new Domain.Personel()
+            {
+                Name = "Efe",
+                LastName = "Yıldız"
+            };
+            int result = service.InsertCommandScalar(personel);
+            Debug.WriteLine(result);
+        }
     }
 }
