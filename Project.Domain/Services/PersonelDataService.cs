@@ -7,5 +7,6 @@
             string query = "INSERT INTO Personel VALUES (@Name,@LastName)";
             return ExecuteCommandText(query, personel);
         }
+
     }
 }

@@ -1,27 +1,26 @@
-﻿using System;
+﻿using Dapper;
+using Dapper.FastCrud;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
+
 namespace Project.Domain
 {
-    public abstract class BaseDataServices<T> where T : BaseDataEntities 
+    public abstract class BaseDataServices<T> where T : BaseDataEntities
     {
-        readonly string ConnectionString = @"Data Source=LENOVO;Initial Catalog=MvcKurumsal;Integrated Security=True";
-        protected IDbConnection Connection
-        {
-            get { return new SqlConnection(ConnectionString); }
-        }
+        private readonly string ConnectionString = @"Data Source=LENOVO;Initial Catalog=MvcKurumsal;Integrated Security=True";
+        protected IDbConnection Connection => new SqlConnection(ConnectionString);
 
-        protected T GetData(string query,object param=null)
+        protected T GetData(string query, object param = null)
         {
             return Connection.QueryFirstOrDefault<T>(query, param);
         }
 
-        protected List<T> GetDataList(string query, object param=null)
+        protected List<T> GetDataList(string query, object param = null)
         {
             return Connection.Query<T>(query, param).ToList();
         }
@@ -30,8 +29,31 @@ namespace Project.Domain
         {
             return Connection.Execute(query, param, commandType: CommandType.Text);
         }
+        protected int ExecuteCommandScalar(string query, object param = null)
+        {
+            return Connection.ExecuteScalar<int>(query, param, commandType: CommandType.Text);
+        }
+
+        protected List<T> ExecuteCommandProcedure(string query, object param = null)
+        {
+            return Connection.Query<T>(query, param, commandType: CommandType.StoredProcedure).ToList();
+
+        }
 
 
-
+        //Dapper.FastCRUD 
+        protected int Insert(T item)
+        {
+            Connection.Insert<T>(item);
+            return item.Id;
+        }
+        protected bool Update(T item)
+        {
+            return Connection.Update<T>(item);
+        }
+        protected bool Delete(T item)
+        {
+            return Connection.Delete<T>(item);
+        }
     }
 }
