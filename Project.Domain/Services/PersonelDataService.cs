@@ -22,5 +22,10 @@ namespace Project.Domain
             string query = "Select * From Personel";
             return GetDataList(query);
         }
+
+        public int FastInsert(Personel personel)
+        {
+            return Insert(personel);
+        }
     }
 }

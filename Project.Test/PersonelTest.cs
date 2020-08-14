@@ -41,5 +41,18 @@ namespace Project.Test
 
             }
         }
+
+        [TestMethod]
+        public void DapperInsert()
+        {
+            var personel = new Domain.Personel()
+            {
+                Name = "Jon",
+                LastName = "Snow"
+            };
+
+            var result = service.FastInsert(personel);
+            Debug.WriteLine(result);
+        }
     }
 }
