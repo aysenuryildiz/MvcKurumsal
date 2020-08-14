@@ -5,7 +5,7 @@
         public int InsertCommand(Personel personel)
         {
             string query = "INSERT INTO Personel VALUES (@Name,@LastName)";
-            return ExecuteCommandText(query,p);
+            return ExecuteCommandText(query, personel);
         }
     }
 }

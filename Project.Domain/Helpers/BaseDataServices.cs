@@ -10,7 +10,7 @@ namespace Project.Domain
 {
     public abstract class BaseDataServices<T> where T : BaseDataEntities 
     {
-        readonly string ConnectionString = @"Data Source:LENOVO;Initial Catalog=MvcKurumsal;Integrated Security=True";
+        readonly string ConnectionString = @"Data Source=LENOVO;Initial Catalog=MvcKurumsal;Integrated Security=True";
         protected IDbConnection Connection
         {
             get { return new SqlConnection(ConnectionString); }
