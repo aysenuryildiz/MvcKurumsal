@@ -13,18 +13,54 @@
     <script>
         $(function () {
             $("#btnSubmit").click(function () {
+                var token = $.parseJSON(localStorage.getItem("token"));
+                if (token == null) {
+                    alert("Please login again");
+                    return;
+                }
+                else {
+                    var accessToken = token.access_token
+                }
                 $.ajax({
                     url: "http://localhost:50887/http/GetPersonelDataList",
                     type: "GET",
                     crossDomain: true,
                     dataType: "json",
+                    headers: { "accept": "application/json", "content-type": "application/json", "authorization": "Bearer " + accessToken },
                     success: function (result) {
                         alert(JSON.stringify(result));
+                        //rrr
                     },
                     error: function (xhr, status, error) {
-                        alert(status + " - " + error);
-                    },
+                        alert("err - " + status + " - " + error);
+                    }
                 });
+            });
+            $("#btnLogin").click(function () {
+                var username = $("#txtUsername").val();
+                var password = $("#txtPassword").val();
+                $.ajax({
+                    url: "http://localhost:50887/token",
+                    type: "POST",
+                    crossDomain: true,
+                    data: { "username": username, "password": password, "grant_type": "password" },
+                    dataType: "json",
+                    success: function (result) {
+                        localStorage.setItem("token", JSON.stringify(result));
+                        $("#lblResult").text(JSON.stringify(result));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("err - " + status + " - " + error);
+                    }
+                });
+            });
+            $("#btnLogout").click(function () {
+                if (localStorage.getItem("token") != null) {
+                    localStorage.removeItem("token");
+                    $("#lblResult").text("");
+                } else {
+                    alert("");
+                }
             });
         });
     </script>
@@ -32,7 +68,15 @@
 <body>
     <div>
         <button id="btnSubmit">Get Personel List</button>
+        <br />
+        <input type="text" id="txtUsername" placeholder="Kullanıcı Adı" />
+        <br />
+        <input type="password" id="txtPassword" placeholder="Şifre" />
+        <br />
+        <button id="btnLogin"> Giriş Yap</button> | <button id="btnLogout"> Çıkış Yap</button>
 
+        <br />
+        <label id="lblResult"></label>
     </div>
 </body>
 </html>
